@@ -32,7 +32,7 @@ func New[T any](args ...int) *List[T] {
 		l.len = args[0]
 		for i := 0; i < args[0]; i++ {
 			var t T
-			l.Insert(0, t)
+			_ = l.Insert(0, t)
 		}
 	} else if len(args) != 0 {
 		panic(fmt.Sprintf("invalid arguments: list.New expects 0 or 1 arguments; found: %d", len(args)))
@@ -74,7 +74,7 @@ func (l *List[T]) Delete(index1 int, index2 ...int) error {
 		panic(fmt.Sprint("invalid arguments: index2 must be a single value"))
 	}
 
-	if len(index2) > 1 && index1 > index2[0] {
+	if len(index2) > 0 && index1 > index2[0] {
 		panic(fmt.Sprint("invalid arguments: index1 must be less than or equal to index2"))
 	}
 
@@ -106,11 +106,11 @@ func (l *List[T]) Delete(index1 int, index2 ...int) error {
 }
 
 func (l *List[T]) PushBack(v T) {
-	l.Insert(l.Len(), v)
+	_ = l.Insert(l.Len(), v)
 }
 
 func (l *List[T]) PushFront(v T) {
-	l.Insert(0, v)
+	_ = l.Insert(0, v)
 }
 
 func (l *List[T]) PopBack() (t T, e error) {
@@ -118,7 +118,7 @@ func (l *List[T]) PopBack() (t T, e error) {
 	if err != nil {
 		return t, err
 	}
-	l.Delete(l.Len() - 1)
+	_ = l.Delete(l.Len() - 1)
 	return value, nil
 }
 
@@ -127,7 +127,7 @@ func (l *List[T]) PopFront() (t T, e error) {
 	if err != nil {
 		return t, err
 	}
-	l.Delete(0)
+	_ = l.Delete(0)
 	return value, nil
 }
 

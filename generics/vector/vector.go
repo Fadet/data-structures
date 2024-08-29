@@ -82,16 +82,16 @@ func (v *Vector[T]) Insert(index int, elems ...T) {
 }
 
 func (v *Vector[T]) Delete(index1 int, index2 ...int) error {
-	if v.Len() == 0 {
-		return fmt.Errorf("invalid operation: empty vector")
-	}
-
 	if len(index2) > 1 {
-		panic(fmt.Sprint("invalid arguments: index2 must not be more than 1"))
+		panic(fmt.Sprint("invalid arguments: index2 must not be a single value"))
 	}
 
-	if index1 > index2[0] {
+	if len(index2) > 0 && index1 > index2[0] {
 		panic(fmt.Sprint("invalid arguments: index1 must be less than or equal to index2"))
+	}
+
+	if index1 < 0 || index1 >= v.Len() {
+		return fmt.Errorf("invalid operation: index out of bounds")
 	}
 
 	if len(index2) == 1 {
